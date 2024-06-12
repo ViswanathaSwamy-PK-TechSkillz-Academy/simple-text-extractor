@@ -1,5 +1,5 @@
 using FuncApp_TextExtractor.Configuration;
-using FuncApp_TextExtractor.ImagesBlobStorage;
+using FuncApp_TextExtractor.ImagesStorage;
 using FuncApp_TextExtractor.OCR;
 using Microsoft.Azure.Functions.Worker;
 using Microsoft.Extensions.Configuration;

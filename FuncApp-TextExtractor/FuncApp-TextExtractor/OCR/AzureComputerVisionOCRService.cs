@@ -1,12 +1,5 @@
 ﻿using FuncApp_TextExtractor.Configuration;
 using Microsoft.Extensions.Options;
-using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net.Http.Headers;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace FuncApp_TextExtractor.OCR;
 

@@ -3,7 +3,7 @@ using FuncApp_TextExtractor.Configuration;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 
-namespace FuncApp_TextExtractor.ImagesBlobStorage;
+namespace FuncApp_TextExtractor.ImagesStorage;
 
 public class ImagesStorageService(IOptions<FunctionSettings> settings, ILogger<ImagesStorageService> logger) : IImagesStorageService
 {
