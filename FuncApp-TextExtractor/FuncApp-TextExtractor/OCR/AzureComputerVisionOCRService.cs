@@ -20,17 +20,15 @@ public class AzureComputerVisionOCRService(IOptions<FunctionSettings> options, I
     {
         var client = _clientFactory.CreateClient();
 
-        client.DefaultRequestHeaders.Add("Ocp-Apim-Subscription-Key", _apiKey);
+        var request = new HttpRequestMessage(HttpMethod.Post, $"{_endpoint}/computervision/imageanalysis:analyze?api-version=2024-02-01&features=read&language=en");
+        request.Headers.Add("Ocp-Apim-Subscription-Key", _apiKey);
 
-        var request = new
-        {
-            url = imageUrl
-        };
+        var content = new StringContent("{\"url\": \"https://learn.microsoft.com/azure/ai-services/computer-vision/media/quickstarts/presentation.png\"}", null, "application/json");
 
-        var requestBody = JsonConvert.SerializeObject(request);
-        var content = new StringContent(requestBody, Encoding.UTF8, "application/json");
+        request.Content = content;
+        var response = await client.SendAsync(request);
 
-        var response = await client.PostAsync($"{_endpoint}/computervision/imageanalysis:analyze?api-version=2024-02-01&features=read&language=en", content);
+        response.EnsureSuccessStatusCode();
 
         if (response.IsSuccessStatusCode)
         {
