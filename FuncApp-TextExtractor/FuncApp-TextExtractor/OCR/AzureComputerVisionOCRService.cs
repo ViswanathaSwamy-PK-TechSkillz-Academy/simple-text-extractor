@@ -19,7 +19,6 @@ public class AzureComputerVisionOCRService(IOptions<FunctionSettings> options, I
     public async Task<string> ExtractTextFromImageAsync(string imageUrl)
     {
         var client = _clientFactory.CreateClient();
-        client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
         client.DefaultRequestHeaders.Add("Ocp-Apim-Subscription-Key", _apiKey);
 

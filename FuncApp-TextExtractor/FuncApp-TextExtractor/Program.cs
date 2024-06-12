@@ -21,6 +21,9 @@ var host = new HostBuilder()
 
         services.Configure<FunctionSettings>(config.GetSection("FunctionSettings"));
 
+        // Add HttpClient and IHttpClientFactory registration
+        services.AddHttpClient();
+
         services.AddTransient<IImagesStorageService, ImagesStorageService>();
 
         services.AddTransient<IOCRService, AzureComputerVisionOCRService>();
