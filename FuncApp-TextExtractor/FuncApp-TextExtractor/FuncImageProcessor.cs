@@ -1,7 +1,7 @@
 using Azure.Messaging.ServiceBus;
-using FuncApp_TextExtractor.BlobStorageServices;
 using FuncApp_TextExtractor.Configuration;
 using FuncApp_TextExtractor.Data.Dtos;
+using FuncApp_TextExtractor.ImagesBlobStorage;
 using Microsoft.Azure.Functions.Worker;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
@@ -10,7 +10,7 @@ using System.Text;
 
 namespace FuncApp_TextExtractor;
 
-public class FuncImageProcessor(ILogger<FuncImageProcessor> logger, IOptions<FunctionSettings> settings)
+public class FuncImageProcessor(ILogger<FuncImageProcessor> logger, IOptions<FunctionSettings> settings, IImagesBlobStorageService blobStorageService)
 {
     private readonly ILogger<FuncImageProcessor> _logger = logger ?? throw new ArgumentNullException(nameof(logger));
     private readonly FunctionSettings _settings = settings.Value ?? throw new ArgumentNullException(nameof(settings));

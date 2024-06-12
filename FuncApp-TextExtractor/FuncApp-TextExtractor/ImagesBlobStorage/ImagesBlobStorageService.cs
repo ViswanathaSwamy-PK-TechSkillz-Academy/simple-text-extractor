@@ -2,9 +2,9 @@
 using FuncApp_TextExtractor.Configuration;
 using Microsoft.Extensions.Options;
 
-namespace FuncApp_TextExtractor.BlobStorageServices;
+namespace FuncApp_TextExtractor.ImagesBlobStorage;
 
-public class BlobStorageService() : IBlobStorageService
+public class ImagesBlobStorageService() : IImagesBlobStorageService
 {
     //private readonly FunctionSettings _settings = settings.Value ?? throw new ArgumentNullException(nameof(settings));
 

@@ -1,5 +1,5 @@
-﻿using FuncApp_TextExtractor.BlobStorageServices;
-using FuncApp_TextExtractor.Configuration;
+﻿using FuncApp_TextExtractor.Configuration;
+using FuncApp_TextExtractor.ImagesBlobStorage;
 using Microsoft.Azure.Functions.Extensions.DependencyInjection;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -17,8 +17,8 @@ public class Startup : FunctionsStartup
             .AddEnvironmentVariables()
             .Build();
 
-        builder.Services.Configure<FunctionSettings>(config.GetSection("FunctionSettings"));
+        builder.Services.AddSingleton<IImagesBlobStorageService, ImagesBlobStorageService>();
 
-        builder.Services.AddScoped<IBlobStorageService, BlobStorageService>();
+        builder.Services.Configure<FunctionSettings>(config.GetSection("FunctionSettings"));
     }
 }
