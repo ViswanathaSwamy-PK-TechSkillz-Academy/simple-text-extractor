@@ -1,5 +1,7 @@
+using FuncApp_TextExtractor.Configuration;
 using FuncApp_TextExtractor.ImagesBlobStorage;
 using Microsoft.Azure.Functions.Worker;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
@@ -9,6 +11,14 @@ var host = new HostBuilder()
     {
         services.AddApplicationInsightsTelemetryWorkerService();
         services.ConfigureFunctionsApplicationInsights();
+
+        var config = new ConfigurationBuilder()
+            .SetBasePath(Environment.CurrentDirectory)
+            .AddJsonFile("local.settings.json", optional: true, reloadOnChange: true)
+            .AddEnvironmentVariables()
+            .Build();
+
+        services.Configure<FunctionSettings>(config.GetSection("FunctionSettings"));
 
         services.AddTransient<IImagesBlobStorageService, ImagesBlobStorageService>();
     })

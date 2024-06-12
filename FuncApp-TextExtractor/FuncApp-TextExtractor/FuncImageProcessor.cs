@@ -31,7 +31,7 @@ public class FuncImageProcessor(ILogger<FuncImageProcessor> logger, IOptions<Fun
             _logger.LogInformation($"Processing image: {imageProcessingMessage.ImageName} :: {imageProcessingMessage.Language} :: {imageProcessingMessage.StorageLocation}");
 
             // Call method to move image to processed container
-            //_blobStorageService.MoveImageToProcessedContainerAsync(imageProcessingMessage.ImageName).Wait(); // Use Wait() since Azure Functions does not support async main
+            _imagesBlobStorageService.MoveImageToProcessedContainerAsync(imageProcessingMessage.ImageName).Wait(); // Use Wait() since Azure Functions does not support async main
         }
         catch (Exception ex)
         {
