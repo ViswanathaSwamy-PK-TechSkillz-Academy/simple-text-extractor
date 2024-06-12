@@ -5,6 +5,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
 [assembly: FunctionsStartup(typeof(FuncApp_TextExtractor.Startup))]
+
 namespace FuncApp_TextExtractor;
 
 public class Startup : FunctionsStartup
@@ -18,7 +19,5 @@ public class Startup : FunctionsStartup
             .Build();
 
         builder.Services.Configure<FunctionSettings>(config.GetSection("FunctionSettings"));
-
-        builder.Services.AddTransient<IImagesBlobStorageService, ImagesBlobStorageService>();
     }
 }

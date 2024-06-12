@@ -1,3 +1,4 @@
+using FuncApp_TextExtractor.ImagesBlobStorage;
 using Microsoft.Azure.Functions.Worker;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -8,6 +9,8 @@ var host = new HostBuilder()
     {
         services.AddApplicationInsightsTelemetryWorkerService();
         services.ConfigureFunctionsApplicationInsights();
+
+        services.AddTransient<IImagesBlobStorageService, ImagesBlobStorageService>();
     })
     .Build();
 
