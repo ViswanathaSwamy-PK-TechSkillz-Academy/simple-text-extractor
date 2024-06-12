@@ -1,4 +1,5 @@
 using Azure.Messaging.ServiceBus;
+using FuncApp_TextExtractor.BlobStorageServices;
 using FuncApp_TextExtractor.Configuration;
 using FuncApp_TextExtractor.Data.Dtos;
 using Microsoft.Azure.Functions.Worker;
@@ -13,6 +14,7 @@ public class FuncImageProcessor(ILogger<FuncImageProcessor> logger, IOptions<Fun
 {
     private readonly ILogger<FuncImageProcessor> _logger = logger ?? throw new ArgumentNullException(nameof(logger));
     private readonly FunctionSettings _settings = settings.Value ?? throw new ArgumentNullException(nameof(settings));
+    //private readonly IBlobStorageService _blobStorageService = blobStorageService ?? throw new ArgumentNullException(nameof(blobStorageService));
 
     [Function(nameof(FuncImageProcessor))]
     public void Run([ServiceBusTrigger("image-processing-queue", Connection = "ServiceBusConnection")] ServiceBusReceivedMessage message)
@@ -26,8 +28,10 @@ public class FuncImageProcessor(ILogger<FuncImageProcessor> logger, IOptions<Fun
             string messageBody = Encoding.UTF8.GetString(message.Body);
             var imageProcessingMessage = JsonConvert.DeserializeObject<ImageProcessingMessageDto>(messageBody);
 
-            _logger.LogInformation($"Processing image: {imageProcessingMessage.ImageName} and {imageProcessingMessage.Language}");
+            _logger.LogInformation($"Processing image: {imageProcessingMessage.ImageName} :: {imageProcessingMessage.Language} :: {imageProcessingMessage.StorageLocation}");
 
+            // Call method to move image to processed container
+            //_blobStorageService.MoveImageToProcessedContainerAsync(imageProcessingMessage.ImageName).Wait(); // Use Wait() since Azure Functions does not support async main
         }
         catch (Exception ex)
         {

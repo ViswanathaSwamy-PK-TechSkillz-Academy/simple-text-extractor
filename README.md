@@ -4,7 +4,9 @@ I am learning creating Simple Text Extractor from different Video Courses, Books
 
 ```json
 {
-  "imageName": "Some Image",
-  "language": "en"
+  "imageName": "Note.jpg",
+  "language": "en",
+  "storageLocation": "https://sttextextractor.blob.core.windows.net/incoming-images/"
 }
 ```
+
