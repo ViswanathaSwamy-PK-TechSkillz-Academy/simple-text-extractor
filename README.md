@@ -9,4 +9,3 @@ I am learning creating Simple Text Extractor from different Video Courses, Books
   "storageLocation": "https://sttextextractor.blob.core.windows.net/incoming-images/"
 }
 ```
-

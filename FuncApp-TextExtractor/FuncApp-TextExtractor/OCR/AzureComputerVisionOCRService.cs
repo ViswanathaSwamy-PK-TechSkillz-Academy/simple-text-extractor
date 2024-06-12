@@ -16,7 +16,8 @@ public class AzureComputerVisionOCRService(IOptions<FunctionSettings> options, I
         var request = new HttpRequestMessage(HttpMethod.Post, $"{_endpoint}/computervision/imageanalysis:analyze?api-version=2024-02-01&features=read&language=en");
         request.Headers.Add("Ocp-Apim-Subscription-Key", _apiKey);
 
-        var content = new StringContent("{\"url\": \"https://learn.microsoft.com/azure/ai-services/computer-vision/media/quickstarts/presentation.png\"}", null, "application/json");
+        //var content = new StringContent("{\"url\": \"https://learn.microsoft.com/azure/ai-services/computer-vision/media/quickstarts/presentation.png\"}", null, "application/json");
+        var content = new StringContent("{\"url\": \"https://sttextextractor.blob.core.windows.net/incoming-images/Note.jpg\"}", null, "application/json");
 
         request.Content = content;
         var response = await client.SendAsync(request);
