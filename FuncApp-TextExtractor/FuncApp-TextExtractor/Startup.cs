@@ -17,8 +17,8 @@ public class Startup : FunctionsStartup
             .AddEnvironmentVariables()
             .Build();
 
-        builder.Services.AddSingleton<IImagesBlobStorageService, ImagesBlobStorageService>();
-
         builder.Services.Configure<FunctionSettings>(config.GetSection("FunctionSettings"));
+
+        builder.Services.AddTransient<IImagesBlobStorageService, ImagesBlobStorageService>();
     }
 }

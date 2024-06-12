@@ -1,8 +1,4 @@
-﻿using Azure.Storage.Blobs;
-using FuncApp_TextExtractor.Configuration;
-using Microsoft.Extensions.Options;
-
-namespace FuncApp_TextExtractor.ImagesBlobStorage;
+﻿namespace FuncApp_TextExtractor.ImagesBlobStorage;
 
 public class ImagesBlobStorageService() : IImagesBlobStorageService
 {
