@@ -3,15 +3,16 @@ using FuncApp_TextExtractor.Configuration;
 using FuncApp_TextExtractor.Data.Dtos;
 using Microsoft.Azure.Functions.Worker;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 using System.Text;
 
 namespace FuncApp_TextExtractor;
 
-public class FuncImageProcessor(ILogger<FuncImageProcessor> logger, FunctionSettings settings)
+public class FuncImageProcessor(ILogger<FuncImageProcessor> logger, IOptions<FunctionSettings> settings)
 {
     private readonly ILogger<FuncImageProcessor> _logger = logger ?? throw new ArgumentNullException(nameof(logger));
-    private readonly FunctionSettings _settings = settings ?? throw new ArgumentNullException(nameof(settings));
+    private readonly FunctionSettings _settings = settings.Value ?? throw new ArgumentNullException(nameof(settings));
 
     [Function(nameof(FuncImageProcessor))]
     public void Run([ServiceBusTrigger("image-processing-queue", Connection = "ServiceBusConnection")] ServiceBusReceivedMessage message)
