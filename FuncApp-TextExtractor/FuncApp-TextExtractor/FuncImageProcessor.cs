@@ -1,27 +1,38 @@
 using Azure.Messaging.ServiceBus;
 using FuncApp_TextExtractor.Configuration;
+using FuncApp_TextExtractor.Data.Dtos;
 using Microsoft.Azure.Functions.Worker;
 using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
+using System.Text;
 
 namespace FuncApp_TextExtractor;
 
-public class FuncImageProcessor
+public class FuncImageProcessor(ILogger<FuncImageProcessor> logger, FunctionSettings settings)
 {
-    private readonly ILogger<FuncImageProcessor> _logger;
-    private readonly FunctionSettings _settings;
-
-    public FuncImageProcessor(ILogger<FuncImageProcessor> logger, FunctionSettings settings)
-    {
-        _logger = logger ?? throw new ArgumentNullException(nameof(logger));
-
-        _settings = settings ?? throw new ArgumentNullException(nameof(settings));
-    }
+    private readonly ILogger<FuncImageProcessor> _logger = logger ?? throw new ArgumentNullException(nameof(logger));
+    private readonly FunctionSettings _settings = settings ?? throw new ArgumentNullException(nameof(settings));
 
     [Function(nameof(FuncImageProcessor))]
     public void Run([ServiceBusTrigger("image-processing-queue", Connection = "ServiceBusConnection")] ServiceBusReceivedMessage message)
     {
-        _logger.LogInformation("Message ID: {id}", message.MessageId);
-        _logger.LogInformation("Message Body: {body}", message.Body);
-        _logger.LogInformation("Message Content-Type: {contentType}", message.ContentType);
+        try
+        {
+            _logger.LogInformation("Message ID: {id}", message.MessageId);
+            _logger.LogInformation("Message Body: {body}", message.Body);
+            _logger.LogInformation("Message Content-Type: {contentType}", message.ContentType);
+
+            string messageBody = Encoding.UTF8.GetString(message.Body);
+            var imageProcessingMessage = JsonConvert.DeserializeObject<ImageProcessingMessageDto>(messageBody);
+
+            _logger.LogInformation($"Processing image: {imageProcessingMessage.ImageName} and {imageProcessingMessage.Language}");
+
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError($"Error processing message: {ex.Message}");
+            throw;
+        }
     }
+
 }
