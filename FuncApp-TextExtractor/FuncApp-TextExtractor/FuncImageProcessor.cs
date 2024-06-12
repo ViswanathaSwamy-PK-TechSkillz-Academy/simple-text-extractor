@@ -10,11 +10,11 @@ using System.Text;
 
 namespace FuncApp_TextExtractor;
 
-public class FuncImageProcessor(ILogger<FuncImageProcessor> logger, IOptions<FunctionSettings> settings, IImagesBlobStorageService imagesBlobStorageService)
+public class FuncImageProcessor(ILogger<FuncImageProcessor> logger, IOptions<FunctionSettings> settings, IImagesStorageService imagesBlobStorageService)
 {
     private readonly ILogger<FuncImageProcessor> _logger = logger ?? throw new ArgumentNullException(nameof(logger));
     private readonly FunctionSettings _settings = settings.Value ?? throw new ArgumentNullException(nameof(settings));
-    private readonly IImagesBlobStorageService _imagesBlobStorageService = imagesBlobStorageService ?? throw new ArgumentNullException(nameof(imagesBlobStorageService));
+    private readonly IImagesStorageService _imagesBlobStorageService = imagesBlobStorageService ?? throw new ArgumentNullException(nameof(imagesBlobStorageService));
 
     [Function(nameof(FuncImageProcessor))]
     public void Run([ServiceBusTrigger("image-processing-queue", Connection = "ServiceBusConnection")] ServiceBusReceivedMessage message)

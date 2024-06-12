@@ -20,7 +20,7 @@ var host = new HostBuilder()
 
         services.Configure<FunctionSettings>(config.GetSection("FunctionSettings"));
 
-        services.AddTransient<IImagesBlobStorageService, ImagesBlobStorageService>();
+        services.AddTransient<IImagesStorageService, ImagesStorageService>();
     })
     .Build();
 
