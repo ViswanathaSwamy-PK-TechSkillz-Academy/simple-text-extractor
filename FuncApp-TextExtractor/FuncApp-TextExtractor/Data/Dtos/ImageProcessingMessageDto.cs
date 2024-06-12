@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace FuncApp_TextExtractor.Data.Dtos;
+﻿namespace FuncApp_TextExtractor.Data.Dtos;
 
 public class ImageProcessingMessageDto
 {
