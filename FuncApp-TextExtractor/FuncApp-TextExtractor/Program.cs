@@ -1,5 +1,6 @@
 using FuncApp_TextExtractor.Configuration;
 using FuncApp_TextExtractor.ImagesBlobStorage;
+using FuncApp_TextExtractor.OCR;
 using Microsoft.Azure.Functions.Worker;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -21,6 +22,8 @@ var host = new HostBuilder()
         services.Configure<FunctionSettings>(config.GetSection("FunctionSettings"));
 
         services.AddTransient<IImagesStorageService, ImagesStorageService>();
+
+        services.AddTransient<IOCRService, AzureComputerVisionOCRService>();
     })
     .Build();
 

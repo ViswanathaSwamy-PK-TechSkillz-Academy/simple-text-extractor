@@ -11,4 +11,8 @@ public class FunctionSettings
     public string CosmosDbDatabaseId { get; set; } = string.Empty;
 
     public string CosmosDbContainerId { get; set; } = string.Empty;
+
+    public string AzAiServicesEndpoint { get; set; } = string.Empty;
+
+    public string AzAiServicesApiKey { get; set; } = string.Empty;
 }
