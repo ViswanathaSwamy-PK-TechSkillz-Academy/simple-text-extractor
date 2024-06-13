@@ -1,6 +1,7 @@
 using Azure.Messaging.ServiceBus;
 using Funcs.TextExtractor.Configuration;
 using Funcs.TextExtractor.Data.Dtos;
+using Funcs.TextExtractor.Data.Repositories;
 using Funcs.TextExtractor.ImagesStorage;
 using Funcs.TextExtractor.OCR;
 using Microsoft.Azure.Functions.Worker;
@@ -11,12 +12,13 @@ using System.Text;
 
 namespace Funcs.TextExtractor;
 
-public class FuncImageProcessor(ILogger<FuncImageProcessor> logger, IOptions<FunctionSettings> settings, IImagesStorageService imagesBlobStorageService, IOCRService ocrService)
+public class FuncImageProcessor(ILogger<FuncImageProcessor> logger, IOptions<FunctionSettings> settings, IImagesStorageService imagesBlobStorageService, IOCRService ocrService, IImageProcessingTaskRepository taskRepository)
 {
     private readonly ILogger<FuncImageProcessor> _logger = logger ?? throw new ArgumentNullException(nameof(logger));
     private readonly FunctionSettings _settings = settings.Value ?? throw new ArgumentNullException(nameof(settings));
     private readonly IImagesStorageService _imagesBlobStorageService = imagesBlobStorageService ?? throw new ArgumentNullException(nameof(imagesBlobStorageService));
     private readonly IOCRService _ocrService = ocrService ?? throw new ArgumentNullException(nameof(ocrService));
+    private readonly IImageProcessingTaskRepository _taskRepository = taskRepository ?? throw new ArgumentNullException(nameof(taskRepository));
 
     [Function(nameof(FuncImageProcessor))]
     public void Run([ServiceBusTrigger("image-processing-queue", Connection = "ServiceBusConnection")] ServiceBusReceivedMessage message)

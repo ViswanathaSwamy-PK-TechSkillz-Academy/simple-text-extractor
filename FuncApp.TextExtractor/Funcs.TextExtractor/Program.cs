@@ -1,4 +1,5 @@
 using Funcs.TextExtractor.Configuration;
+using Funcs.TextExtractor.Data.Repositories;
 using Funcs.TextExtractor.ImagesStorage;
 using Funcs.TextExtractor.OCR;
 using Microsoft.Azure.Functions.Worker;
@@ -27,6 +28,8 @@ var host = new HostBuilder()
         services.AddTransient<IImagesStorageService, ImagesStorageService>();
 
         services.AddTransient<IOCRService, AzureOCRService>();
+
+        services.AddTransient<IImageProcessingTaskRepository, CosmosDbImageProcessingTaskRepository>();
     })
     .Build();
 
