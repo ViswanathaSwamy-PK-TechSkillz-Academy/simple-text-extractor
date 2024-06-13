@@ -1,4 +1,4 @@
-﻿namespace FuncApp_TextExtractor.Data.Dtos;
+﻿namespace FuncApp.TextExtractor.Data.Dtos;
 
 public class ImageProcessingMessageDto
 {

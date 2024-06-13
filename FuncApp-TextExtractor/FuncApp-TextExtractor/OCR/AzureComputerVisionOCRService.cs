@@ -1,7 +1,7 @@
-﻿using FuncApp_TextExtractor.Configuration;
+﻿using FuncApp.TextExtractor.Configuration;
 using Microsoft.Extensions.Options;
 
-namespace FuncApp_TextExtractor.OCR;
+namespace FuncApp.TextExtractor.OCR;
 
 public class AzureComputerVisionOCRService(IOptions<FunctionSettings> options, IHttpClientFactory clientFactory) : IOCRService
 {

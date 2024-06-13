@@ -1,15 +1,15 @@
 using Azure.Messaging.ServiceBus;
-using FuncApp_TextExtractor.Configuration;
-using FuncApp_TextExtractor.Data.Dtos;
-using FuncApp_TextExtractor.ImagesStorage;
-using FuncApp_TextExtractor.OCR;
+using FuncApp.TextExtractor.Configuration;
+using FuncApp.TextExtractor.Data.Dtos;
+using FuncApp.TextExtractor.ImagesStorage;
+using FuncApp.TextExtractor.OCR;
 using Microsoft.Azure.Functions.Worker;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 using System.Text;
 
-namespace FuncApp_TextExtractor;
+namespace FuncApp.TextExtractor;
 
 public class FuncImageProcessor(ILogger<FuncImageProcessor> logger, IOptions<FunctionSettings> settings, IImagesStorageService imagesBlobStorageService, IOCRService ocrService)
 {
