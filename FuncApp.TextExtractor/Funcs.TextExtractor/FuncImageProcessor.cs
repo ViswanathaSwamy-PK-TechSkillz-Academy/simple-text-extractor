@@ -5,10 +5,12 @@ using Funcs.TextExtractor.Data.Entities;
 using Funcs.TextExtractor.Data.Repositories;
 using Funcs.TextExtractor.ImagesStorage;
 using Funcs.TextExtractor.OCR;
+using Microsoft.Azure.Cosmos;
 using Microsoft.Azure.Functions.Worker;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
+using System.Net;
 using System.Text;
 
 namespace Funcs.TextExtractor;
@@ -56,7 +58,7 @@ public class FuncImageProcessor(ILogger<FuncImageProcessor> logger, IOptions<Fun
 
             task.OCRResult = ocrResult;
             // Replace with actual extracted text
-            task.ExtractedText = "This is a sample extracted text."; 
+            task.ExtractedText = "This is a sample extracted text.";
             task.Status = "Processing";
 
             // Update the task in Cosmos DB
@@ -70,6 +72,14 @@ public class FuncImageProcessor(ILogger<FuncImageProcessor> logger, IOptions<Fun
 
             // Update the task in Cosmos DB
             await _taskRepository.UpdateAsync(task);
+        }
+        catch (CosmosException cosmosEx) when (cosmosEx.StatusCode == HttpStatusCode.BadRequest)
+        {
+            _logger.LogError(cosmosEx, $"BadRequest (400) error while processing message ID '{message.MessageId}' from queue: {cosmosEx.Message}");
+            _logger.LogError($"Substatus: {cosmosEx.SubStatusCode}, ActivityId: {cosmosEx.ActivityId}");
+            _logger.LogError($"Cosmos DB error details: {cosmosEx.ToString()}");
+
+            throw; // Rethrow the exception to mark the function invocation as failed
         }
         catch (Exception ex)
         {

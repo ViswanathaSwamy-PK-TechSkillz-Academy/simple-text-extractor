@@ -19,12 +19,16 @@ public class CosmosDbImageProcessingTaskRepository : IImageProcessingTaskReposit
 
     public async Task CreateAsync(ImageProcessingTask task)
     {
-        await _container.CreateItemAsync(task, new PartitionKey(task.Id));
+        var requestOptions = new ItemRequestOptions { EnableContentResponseOnWrite = false };
+        var partitionKey = new PartitionKey(task.RequestId);
+        //await _container.CreateItemAsync(task, new PartitionKey(task.RequestId));
+        await _container.CreateItemAsync(task, partitionKey, requestOptions);
     }
 
     public async Task UpdateAsync(ImageProcessingTask task)
     {
-        await _container.UpsertItemAsync(task, new PartitionKey(task.Id));
+
+        await _container.UpsertItemAsync(task, new PartitionKey(task.RequestId));
     }
 
     public async Task<ImageProcessingTask> GetByIdAsync(string id)

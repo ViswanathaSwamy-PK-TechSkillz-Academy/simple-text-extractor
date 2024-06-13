@@ -17,7 +17,7 @@ public class ImageProcessingTask
 
     public DateTime StartTime { get; set; }
 
-    public DateTime EndTime { get; set; }
+    public DateTime EndTime { get; set; } = DateTime.UtcNow;
 
     // Partition key for Cosmos DB // Make sure this matches the Cosmos DB partition key definition
     public string RequestId { get; set; } = string.Empty;
