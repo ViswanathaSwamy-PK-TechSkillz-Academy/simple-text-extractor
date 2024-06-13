@@ -6,7 +6,7 @@
 		<OutputType>Exe</OutputType>
 		<ImplicitUsings>enable</ImplicitUsings>
 		<Nullable>enable</Nullable>
-		<RootNamespace>FuncApp.TextExtractor</RootNamespace>
+		<RootNamespace>Funcs.TextExtractor</RootNamespace>
 	</PropertyGroup>
 
 	<ItemGroup>

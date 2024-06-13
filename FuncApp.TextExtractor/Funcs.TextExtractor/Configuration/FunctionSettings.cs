@@ -1,4 +1,4 @@
-﻿namespace FuncApp.TextExtractor.Configuration;
+﻿namespace Funcs.TextExtractor.Configuration;
 
 public class FunctionSettings
 {
