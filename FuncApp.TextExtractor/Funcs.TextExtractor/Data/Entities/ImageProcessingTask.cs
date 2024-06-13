@@ -2,7 +2,6 @@
 
 public class ImageProcessingTask
 {
-
     public string Id { get; set; } = Guid.NewGuid().ToString();
 
     public string ImageName { get; set; } = string.Empty;
@@ -19,4 +18,7 @@ public class ImageProcessingTask
     public DateTime StartTime { get; set; }
 
     public DateTime EndTime { get; set; }
+
+    // Partition key for Cosmos DB // Make sure this matches the Cosmos DB partition key definition
+    public string RequestId { get; set; } = string.Empty;
 }

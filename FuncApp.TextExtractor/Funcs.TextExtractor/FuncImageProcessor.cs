@@ -38,7 +38,7 @@ public class FuncImageProcessor(ILogger<FuncImageProcessor> logger, IOptions<Fun
             // Create a new ImageProcessingTask instance
             var task = new ImageProcessingTask
             {
-                Id = imageProcessingMessage.Id,
+                RequestId = imageProcessingMessage.Id,
                 ImageName = imageProcessingMessage.ImageName,
                 Language = imageProcessingMessage.Language,
                 StartTime = DateTime.UtcNow,
