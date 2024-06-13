@@ -26,7 +26,7 @@ var host = new HostBuilder()
 
         services.AddTransient<IImagesStorageService, ImagesStorageService>();
 
-        services.AddTransient<IOCRService, AzureComputerVisionOCRService>();
+        services.AddTransient<IOCRService, AzureOCRService>();
     })
     .Build();
 

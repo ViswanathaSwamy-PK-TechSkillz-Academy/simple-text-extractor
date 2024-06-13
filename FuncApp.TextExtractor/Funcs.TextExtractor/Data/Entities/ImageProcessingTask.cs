@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Funcs.TextExtractor.Data.Entities;
+﻿namespace Funcs.TextExtractor.Data.Entities;
 
 public class ImageProcessingTask
 {

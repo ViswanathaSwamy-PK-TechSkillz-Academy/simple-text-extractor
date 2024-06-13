@@ -3,7 +3,7 @@ using Microsoft.Extensions.Options;
 
 namespace Funcs.TextExtractor.OCR;
 
-public class AzureComputerVisionOCRService(IOptions<FunctionSettings> options, IHttpClientFactory clientFactory) : IOCRService
+public class AzureOCRService(IOptions<FunctionSettings> options, IHttpClientFactory clientFactory) : IOCRService
 {
     private readonly IHttpClientFactory _clientFactory = clientFactory ?? throw new ArgumentNullException(nameof(clientFactory));
     private readonly string _endpoint = options.Value.AzAiServicesEndpoint;
