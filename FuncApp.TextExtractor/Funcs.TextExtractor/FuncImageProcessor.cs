@@ -1,6 +1,7 @@
 using Azure.Messaging.ServiceBus;
 using Funcs.TextExtractor.Configuration;
 using Funcs.TextExtractor.Data.Dtos;
+using Funcs.TextExtractor.Data.Entities;
 using Funcs.TextExtractor.Data.Repositories;
 using Funcs.TextExtractor.ImagesStorage;
 using Funcs.TextExtractor.OCR;
@@ -21,7 +22,7 @@ public class FuncImageProcessor(ILogger<FuncImageProcessor> logger, IOptions<Fun
     private readonly IImageProcessingTaskRepository _taskRepository = taskRepository ?? throw new ArgumentNullException(nameof(taskRepository));
 
     [Function(nameof(FuncImageProcessor))]
-    public void Run([ServiceBusTrigger("image-processing-queue", Connection = "ServiceBusConnection")] ServiceBusReceivedMessage message)
+    public async Task RunAsync([ServiceBusTrigger("image-processing-queue", Connection = "ServiceBusConnection")] ServiceBusReceivedMessage message)
     {
         try
         {
@@ -34,14 +35,41 @@ public class FuncImageProcessor(ILogger<FuncImageProcessor> logger, IOptions<Fun
 
             _logger.LogInformation($"Processing image: {imageProcessingMessage.ImageName} :: {imageProcessingMessage.Language} :: {imageProcessingMessage.StorageLocation}");
 
+            // Create a new ImageProcessingTask instance
+            var task = new ImageProcessingTask
+            {
+                Id = imageProcessingMessage.Id,
+                ImageName = imageProcessingMessage.ImageName,
+                Language = imageProcessingMessage.Language,
+                StartTime = DateTime.UtcNow,
+                Status = "Pending"
+            };
+
+            // Store the initial task in Cosmos DB
+            await _taskRepository.CreateAsync(task);
+
             // Use the OCR service to perform OCR on the image
-            var ocrResult = _ocrService.ExtractTextFromImageAsync($"{imageProcessingMessage.StorageLocation}{imageProcessingMessage.ImageName}").Result;
+            var ocrResult = await _ocrService.ExtractTextFromImageAsync($"{imageProcessingMessage.StorageLocation}{imageProcessingMessage.ImageName}");
 
             // Process the OCR result as needed
             _logger.LogInformation($"Extracted Text: {ocrResult}");
 
+            task.OCRResult = ocrResult;
+            // Replace with actual extracted text
+            task.ExtractedText = "This is a sample extracted text."; 
+            task.Status = "Processing";
+
+            // Update the task in Cosmos DB
+            await _taskRepository.UpdateAsync(task);
+
             // Call method to move image to processed container // Use Wait() since Azure Functions does not support async main
-            _imagesBlobStorageService.MoveImageToProcessedContainerAsync(imageProcessingMessage.ImageName).Wait();
+            await _imagesBlobStorageService.MoveImageToProcessedContainerAsync(imageProcessingMessage.ImageName);
+
+            task.EndTime = DateTime.UtcNow;
+            task.Status = "Completed";
+
+            // Update the task in Cosmos DB
+            await _taskRepository.UpdateAsync(task);
         }
         catch (Exception ex)
         {
