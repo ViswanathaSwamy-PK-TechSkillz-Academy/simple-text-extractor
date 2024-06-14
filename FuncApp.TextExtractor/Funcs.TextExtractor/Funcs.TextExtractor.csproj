@@ -10,17 +10,6 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-	  <None Remove="local.settings.json" />
-	</ItemGroup>
-
-	<ItemGroup>
-	  <Content Include="local.settings.json">
-	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-	    <CopyToPublishDirectory>Never</CopyToPublishDirectory>
-	  </Content>
-	</ItemGroup>
-
-	<ItemGroup>
 		<PackageReference Include="Azure.Storage.Blobs" Version="12.20.0" />
 		<PackageReference Include="Microsoft.Azure.Cosmos" Version="3.41.0" />
 		<PackageReference Include="Microsoft.Azure.Functions.Extensions" Version="1.1.0" />
@@ -37,6 +26,10 @@
 			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 		</None>
 		<None Update="example.local.settings.json">
+		  <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		  <CopyToPublishDirectory>Never</CopyToPublishDirectory>
+		</None>
+		<None Update="local.settings.json">
 		  <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 		  <CopyToPublishDirectory>Never</CopyToPublishDirectory>
 		</None>
