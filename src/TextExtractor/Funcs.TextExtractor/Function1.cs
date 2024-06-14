@@ -17,7 +17,7 @@ namespace Funcs.TextExtractor
 
         [Function(nameof(Function1))]
         public async Task Run(
-            [ServiceBusTrigger("image-processing-queue", Connection = "")]
+            [ServiceBusTrigger("image-processing-queue", Connection = "ServiceBusConnection")]
             ServiceBusReceivedMessage message,
             ServiceBusMessageActions messageActions)
         {
