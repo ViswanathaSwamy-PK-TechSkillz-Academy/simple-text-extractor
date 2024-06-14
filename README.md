@@ -12,5 +12,6 @@ I am learning creating Simple Text Extractor from different Video Courses, Books
 
 ## To do
 
-1. Blob Storage -> Az Func -> Service Bus -> Az Func -> Existing Workflow
+1. Blob Storage -> Az Func -> Cosmos Db -> Service Bus
+     -> Az Func -> Existing Workflow
 2. Folder Processing
