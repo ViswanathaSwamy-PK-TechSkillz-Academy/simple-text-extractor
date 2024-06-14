@@ -1,0 +1,19 @@
+{
+  "IsEncrypted": false,
+  "Values": {
+    "AzureWebJobsStorage": "UseDevelopmentStorage=true",
+    "FUNCTIONS_WORKER_RUNTIME": "dotnet",
+    "ServiceBusConnection": "<YourServiceBusConnectionString>",
+    "ApplicationInsights:InstrumentationKey": "<YourApplicationInsightsInstrumentationKey>"
+  },
+  "FunctionSettings": {
+    "BlobConnectionString": "<YourBlobConnectionString>",
+    "CosmosDbConnectionString": "<YourCosmosDbConnectionString>",
+    "CosmosDbEndpoint": "<YourCosmosDbEndpoint>",
+    "CosmosDbKey": "<YourCosmosDbKey>",
+    "CosmosDbDatabaseId": "<YourCosmosDbDatabaseId>",
+    "CosmosDbContainerId": "<YourCosmosDbContainerId>",
+    "AzAiServicesEndpoint": "<YourAzAiServicesEndpoint>",
+    "AzAiServicesApiKey": "<YourAzAiServicesApiKey>"
+  }
+}
