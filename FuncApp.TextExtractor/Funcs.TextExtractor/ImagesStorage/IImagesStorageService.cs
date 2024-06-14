@@ -1,4 +1,4 @@
-﻿namespace FuncApp_TextExtractor.ImagesStorage;
+﻿namespace Funcs.TextExtractor.ImagesStorage;
 
 public interface IImagesStorageService
 {

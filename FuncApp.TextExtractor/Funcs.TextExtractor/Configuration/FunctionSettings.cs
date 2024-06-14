@@ -1,8 +1,10 @@
-﻿namespace FuncApp_TextExtractor.Configuration;
+﻿namespace Funcs.TextExtractor.Configuration;
 
 public class FunctionSettings
 {
     public string BlobConnectionString { get; set; } = string.Empty;
+
+    public string CosmosDbConnectionString { get; set; } = string.Empty;
 
     public string CosmosDbEndpoint { get; set; } = string.Empty;
 

@@ -1,4 +1,4 @@
-﻿namespace FuncApp_TextExtractor.OCR;
+﻿namespace Funcs.TextExtractor.OCR;
 
 public interface IOCRService
 {
