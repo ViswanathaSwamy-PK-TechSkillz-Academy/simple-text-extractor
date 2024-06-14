@@ -6,16 +6,16 @@ using Microsoft.Extensions.Logging;
 
 namespace Funcs.TextExtractor
 {
-    public class Function1
+    public class FuncImageProcessor
     {
-        private readonly ILogger<Function1> _logger;
+        private readonly ILogger<FuncImageProcessor> _logger;
 
-        public Function1(ILogger<Function1> logger)
+        public FuncImageProcessor(ILogger<FuncImageProcessor> logger)
         {
             _logger = logger;
         }
 
-        [Function(nameof(Function1))]
+        [Function(nameof(FuncImageProcessor))]
         public async Task Run(
             [ServiceBusTrigger("image-processing-queue", Connection = "ServiceBusConnection")]
             ServiceBusReceivedMessage message,
