@@ -1,6 +1,8 @@
-﻿namespace Funcs.TextExtractor.OCR;
+﻿using Funcs.TextExtractor.Data.Dtos;
+
+namespace Funcs.TextExtractor.OCR;
 
 public interface IOCRService
 {
-    Task<string> ExtractTextFromImageAsync(string imageUrl);
+    Task<ImageOCRResults> ExtractTextFromImageAsync(string imageUrl);
 }

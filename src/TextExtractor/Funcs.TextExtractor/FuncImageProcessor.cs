@@ -51,27 +51,27 @@ public class FuncImageProcessor(ILogger<FuncImageProcessor> logger, IOptions<Fun
             await _taskRepository.CreateAsync(task);
 
             // Use the OCR service to perform OCR on the image
-            var ocrResult = await _ocrService.ExtractTextFromImageAsync($"{imageProcessingMessage.StorageLocation}{imageProcessingMessage.ImageName}");
+            var imageOCRResult = await _ocrService.ExtractTextFromImageAsync($"{imageProcessingMessage.StorageLocation}{imageProcessingMessage.ImageName}");
 
             // Process the OCR result as needed
-            _logger.LogInformation($"Extracted Text: {ocrResult}");
+            _logger.LogInformation($"Extracted Text: {imageOCRResult}");
 
-            task.OCRResult = ocrResult;
+            task.OCRResult = imageOCRResult.OCRResult;
             // Replace with actual extracted text
-            task.ExtractedText = "This is a sample extracted text.";
+            task.ExtractedText = imageOCRResult.ExtractedText;
             task.Status = "Processing";
 
             // Update the task in Cosmos DB
             await _taskRepository.UpdateAsync(task);
 
-            // Call method to move image to processed container // Use Wait() since Azure Functions does not support async main
-            await _imagesBlobStorageService.MoveImageToProcessedContainerAsync(imageProcessingMessage.ImageName);
+            //// Call method to move image to processed container // Use Wait() since Azure Functions does not support async main
+            //await _imagesBlobStorageService.MoveImageToProcessedContainerAsync(imageProcessingMessage.ImageName);
 
-            task.EndTime = DateTime.UtcNow;
-            task.Status = "Completed";
+            //task.EndTime = DateTime.UtcNow;
+            //task.Status = "Completed";
 
-            // Update the task in Cosmos DB
-            await _taskRepository.UpdateAsync(task);
+            //// Update the task in Cosmos DB
+            //await _taskRepository.UpdateAsync(task);
         }
         catch (CosmosException cosmosEx) when (cosmosEx.StatusCode == HttpStatusCode.BadRequest)
         {
