@@ -1,5 +1,9 @@
 ﻿using Funcs.TextExtractor.Configuration;
+using Funcs.TextExtractor.Data.Dtos;
+using Funcs.TextExtractor.Data.Entities;
 using Microsoft.Extensions.Options;
+using Newtonsoft.Json;
+using System.Text;
 
 namespace Funcs.TextExtractor.OCR;
 
@@ -9,7 +13,7 @@ public class AzureOCRService(IOptions<FunctionSettings> options, IHttpClientFact
     private readonly string _endpoint = options.Value.AzAiServicesEndpoint;
     private readonly string _apiKey = options.Value.AzAiServicesApiKey;
 
-    public async Task<string> ExtractTextFromImageAsync(string imageUrl)
+    public async Task<ImageOCRResults> ExtractTextFromImageAsync(string imageUrl)
     {
         var client = _clientFactory.CreateClient();
 
@@ -29,9 +33,22 @@ public class AzureOCRService(IOptions<FunctionSettings> options, IHttpClientFact
         if (response.IsSuccessStatusCode)
         {
             var result = await response.Content.ReadAsStringAsync();
+            StringBuilder plainText = new(1024);
+
             // Parse the response to extract the text from the image
-            // For simplicity, let's assume the text is directly returned in the response
-            return result;
+            // Deserialize JSON string to ImageAnalysisResult
+            ImageAnalysisResult analysisResult = JsonConvert.DeserializeObject<ImageAnalysisResult>(result);
+            foreach (var block in analysisResult.ReadResult.Blocks)
+            {
+                foreach (var line in block.Lines)
+                {
+                    plainText.Append($"{line.Text}{Environment.NewLine}");
+                }
+            }
+
+            //Console.WriteLine($"Extracted Text: {plainText.ToString()}");
+
+            return new ImageOCRResults { OCRResult = result, ExtractedText = plainText.ToString() };
         }
         else
         {
