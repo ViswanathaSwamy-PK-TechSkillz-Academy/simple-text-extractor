@@ -1,8 +1,8 @@
 {
   "profiles": {
-    "FuncApp.TextExtractor": {
+    "Funcs.TextExtractor": {
       "commandName": "Project",
-      "commandLineArgs": "--port 7259",
+      "commandLineArgs": "--port 7043",
       "launchBrowser": false
     }
   }
