@@ -1,4 +1,5 @@
-﻿using Funcs.TextExtractor.Configuration;
+﻿using Azure.Storage.Blobs;
+using Funcs.TextExtractor.Configuration;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 

@@ -1,5 +1,6 @@
 ﻿using Funcs.TextExtractor.Configuration;
 using Funcs.TextExtractor.Data.Entities;
+using Microsoft.Azure.Cosmos;
 using Microsoft.Extensions.Options;
 
 namespace Funcs.TextExtractor.Repositories;
