@@ -17,7 +17,9 @@ public class AzureOCRService(IOptions<FunctionSettings> options, IHttpClientFact
         request.Headers.Add("Ocp-Apim-Subscription-Key", _apiKey);
 
         //var content = new StringContent("{\"url\": \"https://learn.microsoft.com/azure/ai-services/computer-vision/media/quickstarts/presentation.png\"}", null, "application/json");
-        var content = new StringContent("{\"url\": \"https://sttextextractor.blob.core.windows.net/incoming-images/Note.jpg\"}", null, "application/json");
+        //var content = new StringContent("{\"url\": \"https://sttextextractor.blob.core.windows.net/incoming-images/Note.jpg\"}", null, "application/json");
+        var jsonPayload = $"{{\"url\": \"{imageUrl}\"}}";
+        var content = new StringContent(jsonPayload, System.Text.Encoding.UTF8, "application/json");
 
         request.Content = content;
         var response = await client.SendAsync(request);
